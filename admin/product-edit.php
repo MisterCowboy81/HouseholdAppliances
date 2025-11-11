@@ -2,6 +2,7 @@
 $pageTitle = 'ویرایش محصول';
 require_once 'header.php';
 require_once __DIR__ . '/../includes/Product.php';
+require_once __DIR__ . '/../includes/Category.php';
 
 $productObj = new Product();
 $categoryObj = new Category();

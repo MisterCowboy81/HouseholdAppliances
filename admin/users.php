@@ -9,6 +9,9 @@ $users = $userObj->getAllUsers(100, 0);
 
 <div class="page-header">
     <h1 class="page-title">مدیریت کاربران</h1>
+    <a href="<?php echo ADMIN_URL; ?>/user-add.php" class="btn btn-primary">
+        <i class="fas fa-plus"></i> افزودن کاربر جدید
+    </a>
 </div>
 
 <div class="admin-card">

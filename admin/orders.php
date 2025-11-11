@@ -26,6 +26,9 @@ $filters = [];
 if (isset($_GET['status']) && !empty($_GET['status'])) {
     $filters['status'] = sanitize($_GET['status']);
 }
+if (isset($_GET['payment_status']) && !empty($_GET['payment_status'])) {
+    $filters['payment_status'] = sanitize($_GET['payment_status']);
+}
 
 $orders = $orderObj->getAllOrders($filters, 100, 0);
 ?>
@@ -36,8 +39,8 @@ $orders = $orderObj->getAllOrders($filters, 100, 0);
 
 <!-- Filter -->
 <div class="admin-card" style="margin-bottom: 20px;">
-    <form method="GET" style="display: flex; gap: 15px; align-items: end;">
-        <div class="form-group" style="margin: 0; flex: 1;">
+    <form method="GET" style="display: flex; gap: 15px; align-items: end; flex-wrap: wrap;">
+        <div class="form-group" style="margin: 0; flex: 1; min-width: 200px;">
             <label class="form-label">فیلتر بر اساس وضعیت</label>
             <select name="status" class="form-control">
                 <option value="">همه</option>
@@ -46,6 +49,15 @@ $orders = $orderObj->getAllOrders($filters, 100, 0);
                 <option value="shipped" <?php echo (isset($_GET['status']) && $_GET['status'] == 'shipped') ? 'selected' : ''; ?>>ارسال شده</option>
                 <option value="delivered" <?php echo (isset($_GET['status']) && $_GET['status'] == 'delivered') ? 'selected' : ''; ?>>تحویل داده شده</option>
                 <option value="cancelled" <?php echo (isset($_GET['status']) && $_GET['status'] == 'cancelled') ? 'selected' : ''; ?>>لغو شده</option>
+            </select>
+        </div>
+        <div class="form-group" style="margin: 0; flex: 1; min-width: 200px;">
+            <label class="form-label">وضعیت پرداخت</label>
+            <select name="payment_status" class="form-control">
+                <option value="">همه</option>
+                <option value="pending" <?php echo (isset($_GET['payment_status']) && $_GET['payment_status'] == 'pending') ? 'selected' : ''; ?>>در انتظار</option>
+                <option value="paid" <?php echo (isset($_GET['payment_status']) && $_GET['payment_status'] == 'paid') ? 'selected' : ''; ?>>پرداخت شده</option>
+                <option value="failed" <?php echo (isset($_GET['payment_status']) && $_GET['payment_status'] == 'failed') ? 'selected' : ''; ?>>ناموفق</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">اعمال فیلتر</button>

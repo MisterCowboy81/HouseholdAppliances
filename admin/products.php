@@ -1,8 +1,12 @@
 <?php
-$pageTitle = 'مدیریت محصولات';
-require_once 'header.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/Product.php';
 require_once __DIR__ . '/../includes/Category.php';
+
+requireLogin();
+requireAdmin();
 
 $productObj = new Product();
 $categoryObj = new Category();
@@ -17,6 +21,9 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
     }
     redirect(ADMIN_URL . '/products.php');
 }
+
+$pageTitle = 'مدیریت محصولات';
+require_once 'header.php';
 
 // Get all products
 $products = $productObj->getProducts([], 100, 0);

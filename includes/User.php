@@ -17,7 +17,7 @@ class User {
     /**
      * Register new user
      */
-    public function register($username, $email, $password, $fullName, $phone = null) {
+    public function register($username, $email, $password, $fullName, $phone = null, $role = 'customer') {
         // Validate input
         if (empty($username) || empty($email) || empty($password) || empty($fullName)) {
             return ['success' => false, 'message' => 'لطفا تمام فیلدهای الزامی را پر کنید'];
@@ -51,8 +51,8 @@ class User {
         $hashedPassword = hashPassword($password);
         
         // Insert user
-        $stmt = $this->db->prepare("INSERT INTO users (username, email, password, full_name, phone, role) VALUES (?, ?, ?, ?, ?, 'customer')");
-        $stmt->bind_param("sssss", $username, $email, $hashedPassword, $fullName, $phone);
+        $stmt = $this->db->prepare("INSERT INTO users (username, email, password, full_name, phone, role) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $username, $email, $hashedPassword, $fullName, $phone, $role);
         
         if ($stmt->execute()) {
             return ['success' => true, 'message' => 'ثبت نام با موفقیت انجام شد', 'user_id' => $this->db->lastInsertId()];
@@ -179,6 +179,42 @@ class User {
         }
         
         return ['success' => false, 'message' => 'خطا در تغییر رمز عبور'];
+    }
+    
+    /**
+     * Update user profile
+     */
+    public function updateProfile($userId, $data) {
+        $fields = [];
+        $params = [];
+        $types = '';
+        
+        $allowedFields = ['full_name' => 's', 'phone' => 's', 'address' => 's', 'city' => 's', 'postal_code' => 's'];
+        
+        foreach ($allowedFields as $field => $type) {
+            if (isset($data[$field])) {
+                $fields[] = "$field = ?";
+                $params[] = $data[$field];
+                $types .= $type;
+            }
+        }
+        
+        if (empty($fields)) {
+            return ['success' => false, 'message' => 'هیچ داده‌ای برای بروزرسانی وجود ندارد'];
+        }
+        
+        $params[] = $userId;
+        $types .= 'i';
+        
+        $sql = "UPDATE users SET " . implode(', ', $fields) . " WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param($types, ...$params);
+        
+        if ($stmt->execute()) {
+            return ['success' => true, 'message' => 'اطلاعات با موفقیت بروزرسانی شد'];
+        }
+        
+        return ['success' => false, 'message' => 'خطا در بروزرسانی اطلاعات'];
     }
     
     /**

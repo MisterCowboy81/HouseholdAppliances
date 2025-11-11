@@ -172,13 +172,13 @@ class Order {
         $types = '';
         
         if (!empty($filters['status'])) {
-            $where[] = "status = ?";
+            $where[] = "o.status = ?";
             $params[] = $filters['status'];
             $types .= 's';
         }
         
         if (!empty($filters['payment_status'])) {
-            $where[] = "payment_status = ?";
+            $where[] = "o.payment_status = ?";
             $params[] = $filters['payment_status'];
             $types .= 's';
         }

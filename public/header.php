@@ -60,7 +60,7 @@ $currentUser = getCurrentUser();
                 </div>
                 
                 <div class="header-actions">
-                    <?php if (isLoggedIn()): ?>
+                    <?php if (isLoggedIn() && !isAdmin()): ?>
                         <a href="<?php echo SITE_URL; ?>/public/profile.php" class="header-link">
                             <i class="fas fa-user"></i>
                             <span>حساب کاربری</span>

@@ -1,7 +1,11 @@
 <?php
-$pageTitle = 'مدیریت دسته‌بندی‌ها';
-require_once 'header.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/Category.php';
+
+requireLogin();
+requireAdmin();
 
 $categoryObj = new Category();
 
@@ -44,6 +48,10 @@ $editCategory = null;
 
 if (isset($_GET['edit'])) {
     $editCategory = $categoryObj->getById(intval($_GET['edit']));
+}
+
+$pageTitle = 'مدیریت دسته‌بندی‌ها';
+require_once 'header.php';
 }
 ?>
 

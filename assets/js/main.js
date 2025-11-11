@@ -5,6 +5,9 @@
 
 $(document).ready(function() {
     
+    // Get base URL from the page
+    var baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf('/public/'));
+    
     // Add to cart functionality
     $('.add-to-cart').on('click', function(e) {
         e.preventDefault();
@@ -13,7 +16,7 @@ $(document).ready(function() {
         var quantity = $(this).data('quantity') || 1;
         
         $.ajax({
-            url: '/public/ajax/cart.php',
+            url: baseUrl + '/public/ajax/cart.php',
             method: 'POST',
             data: {
                 action: 'add',
@@ -41,7 +44,7 @@ $(document).ready(function() {
         var quantity = $(this).val();
         
         $.ajax({
-            url: '/public/ajax/cart.php',
+            url: baseUrl + '/public/ajax/cart.php',
             method: 'POST',
             data: {
                 action: 'update',
@@ -70,7 +73,7 @@ $(document).ready(function() {
         var productId = $(this).data('product-id');
         
         $.ajax({
-            url: '/public/ajax/cart.php',
+            url: baseUrl + '/public/ajax/cart.php',
             method: 'POST',
             data: {
                 action: 'remove',
@@ -169,8 +172,9 @@ $(document).ready(function() {
  * Update cart count badge
  */
 function updateCartCount() {
+    var baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf('/public/'));
     $.ajax({
-        url: '/public/ajax/cart.php',
+        url: baseUrl + '/public/ajax/cart.php',
         method: 'POST',
         data: { action: 'count' },
         dataType: 'json',

@@ -247,3 +247,87 @@
     margin: 0;
     font-weight: 800;
 }
+
+/* Responsive Design for Admin Panel */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-card {
+        padding: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 20px;
+    }
+    
+    .stat-info h3 {
+        font-size: 1.8rem;
+    }
+    
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .admin-table {
+        overflow-x: auto;
+    }
+    
+    .admin-table table {
+        min-width: 600px;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-card h2 {
+        font-size: 1.2rem;
+    }
+    
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}

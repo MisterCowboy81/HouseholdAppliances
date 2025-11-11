@@ -624,6 +624,32 @@ footer {
         flex-direction: column;
     }
     
+    nav li {
+        width: 100%;
+    }
+    
+    nav a {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .dropdown-menu {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        background: var(--primary-dark);
+        border-radius: 0;
+    }
+    
+    .dropdown-menu a {
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .dropdown-menu a:hover {
+        background: rgba(0, 0, 0, 0.2);
+    }
+    
     .hero h1 {
         font-size: 2rem;
     }
@@ -631,7 +657,73 @@ footer {
     .grid-2,
     .grid-3,
     .grid-4 {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    
+    .product-card {
+        font-size: 0.9rem;
+    }
+    
+    .product-content {
+        padding: 15px;
+    }
+    
+    .section {
+        padding: 40px 0;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .cart-table table {
+        font-size: 0.9rem;
+    }
+    
+    .cart-item-image {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.4rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Profile Page Responsive */
+@media (max-width: 992px) {
+    .profile-layout {
+        grid-template-columns: 1fr !important;
     }
 }
 
