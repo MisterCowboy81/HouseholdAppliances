@@ -677,13 +677,37 @@ footer {
         font-size: 2rem;
     }
     
+    /* Cart Table Responsive */
+    .cart-table {
+        overflow-x: auto;
+    }
+    
     .cart-table table {
+        min-width: 600px;
         font-size: 0.9rem;
     }
     
     .cart-item-image {
         width: 60px;
         height: 60px;
+    }
+    
+    .quantity-input {
+        width: 60px;
+    }
+    
+    /* Product Detail Responsive */
+    .product-detail-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .product-detail-image {
+        height: 300px;
+    }
+    
+    /* Checkout Responsive */
+    .checkout-grid {
+        grid-template-columns: 1fr !important;
     }
 }
 

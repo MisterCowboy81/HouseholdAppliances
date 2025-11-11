@@ -1,6 +1,7 @@
 <?php
 $pageTitle = 'پروفایل کاربر';
 require_once 'header.php';
+require_once __DIR__ . '/../includes/User.php';
 require_once __DIR__ . '/../includes/Order.php';
 
 requireLogin();

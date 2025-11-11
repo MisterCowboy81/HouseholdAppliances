@@ -2,10 +2,12 @@
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/Cart.php';
 require_once __DIR__ . '/../includes/Order.php';
 
 requireLogin();
 
+$cart = new Cart();
 $cartItems = $cart->getItems();
 $cartTotal = $cart->getTotal();
 

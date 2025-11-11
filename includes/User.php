@@ -182,42 +182,6 @@ class User {
     }
     
     /**
-     * Update user profile
-     */
-    public function updateProfile($userId, $data) {
-        $fields = [];
-        $params = [];
-        $types = '';
-        
-        $allowedFields = ['full_name' => 's', 'phone' => 's', 'address' => 's', 'city' => 's', 'postal_code' => 's'];
-        
-        foreach ($allowedFields as $field => $type) {
-            if (isset($data[$field])) {
-                $fields[] = "$field = ?";
-                $params[] = $data[$field];
-                $types .= $type;
-            }
-        }
-        
-        if (empty($fields)) {
-            return ['success' => false, 'message' => 'هیچ داده‌ای برای بروزرسانی وجود ندارد'];
-        }
-        
-        $params[] = $userId;
-        $types .= 'i';
-        
-        $sql = "UPDATE users SET " . implode(', ', $fields) . " WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param($types, ...$params);
-        
-        if ($stmt->execute()) {
-            return ['success' => true, 'message' => 'اطلاعات با موفقیت بروزرسانی شد'];
-        }
-        
-        return ['success' => false, 'message' => 'خطا در بروزرسانی اطلاعات'];
-    }
-    
-    /**
      * Get user by ID
      */
     public function getUserById($userId) {

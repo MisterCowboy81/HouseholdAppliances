@@ -52,7 +52,6 @@ if (isset($_GET['edit'])) {
 
 $pageTitle = 'مدیریت دسته‌بندی‌ها';
 require_once 'header.php';
-}
 ?>
 
 <div class="page-header">

@@ -1,8 +1,12 @@
 <?php
-$pageTitle = 'ویرایش محصول';
-require_once 'header.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/Product.php';
 require_once __DIR__ . '/../includes/Category.php';
+
+requireLogin();
+requireAdmin();
 
 $productObj = new Product();
 $categoryObj = new Category();
@@ -17,9 +21,6 @@ if ($isEdit) {
         setFlashMessage('error', 'محصول یافت نشد');
         redirect(ADMIN_URL . '/products.php');
     }
-    $pageTitle = 'ویرایش محصول';
-} else {
-    $pageTitle = 'افزودن محصول جدید';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -70,6 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $categories = $categoryObj->getAll('all');
+
+$pageTitle = $isEdit ? 'ویرایش محصول' : 'افزودن محصول جدید';
+require_once 'header.php';
 ?>
 
 <div class="page-header">
@@ -108,13 +112,13 @@ $categories = $categoryObj->getAll('all');
             <div class="form-group">
                 <label class="form-label">برند</label>
                 <input type="text" name="brand" class="form-control" 
-                       value="<?php echo $product ? htmlspecialchars($product['brand']) : ''; ?>">
+                       value="<?php echo $product ? htmlspecialchars($product['brand'] ?? '') : ''; ?>">
             </div>
             
             <div class="form-group">
                 <label class="form-label">مدل</label>
                 <input type="text" name="model" class="form-control" 
-                       value="<?php echo $product ? htmlspecialchars($product['model']) : ''; ?>">
+                       value="<?php echo $product ? htmlspecialchars($product['model'] ?? '') : ''; ?>">
             </div>
             
             <div class="form-group">
@@ -138,7 +142,7 @@ $categories = $categoryObj->getAll('all');
             <div class="form-group">
                 <label class="form-label">گارانتی</label>
                 <input type="text" name="warranty" class="form-control" 
-                       value="<?php echo $product ? htmlspecialchars($product['warranty']) : ''; ?>">
+                       value="<?php echo $product ? htmlspecialchars($product['warranty'] ?? '') : ''; ?>">
             </div>
             
             <div class="form-group">
@@ -159,7 +163,7 @@ $categories = $categoryObj->getAll('all');
         
         <div class="form-group">
             <label class="form-label">توضیحات</label>
-            <textarea name="description" class="form-control" rows="5"><?php echo $product ? htmlspecialchars($product['description']) : ''; ?></textarea>
+            <textarea name="description" class="form-control" rows="5"><?php echo $product ? htmlspecialchars($product['description'] ?? '') : ''; ?></textarea>
         </div>
         
         <div class="form-group">
