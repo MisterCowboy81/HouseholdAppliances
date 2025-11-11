@@ -1,0 +1,25 @@
+# Uploads directory - only ignore the content, not the directories
+uploads/products/*
+uploads/categories/*
+!uploads/products/.gitkeep
+!uploads/categories/.gitkeep
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+/tmp/
+
+# Config files (if they contain sensitive data)
+# includes/config.php
+
