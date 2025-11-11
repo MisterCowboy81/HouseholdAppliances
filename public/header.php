@@ -82,10 +82,15 @@ $currentUser = getCurrentUser();
             <div class="container">
                 <ul>
                     <li><a href="<?php echo SITE_URL; ?>/public/index.php"><i class="fas fa-home"></i> صفحه اصلی</a></li>
-                    <li><a href="<?php echo SITE_URL; ?>/public/products.php"><i class="fas fa-boxes"></i> محصولات</a></li>
-                    <?php foreach (array_slice($categories, 0, 5) as $category): ?>
-                        <li><a href="<?php echo SITE_URL; ?>/public/products.php?category=<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['name']); ?></a></li>
-                    <?php endforeach; ?>
+                    <li class="dropdown">
+                        <a href="<?php echo SITE_URL; ?>/public/products.php"><i class="fas fa-boxes"></i> محصولات <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo SITE_URL; ?>/public/products.php">همه محصولات</a></li>
+                            <?php foreach ($categories as $category): ?>
+                                <li><a href="<?php echo SITE_URL; ?>/public/products.php?category=<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['name']); ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
                     <li><a href="<?php echo SITE_URL; ?>/public/contact.php"><i class="fas fa-envelope"></i> تماس با ما</a></li>
                 </ul>
             </div>

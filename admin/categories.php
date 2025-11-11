@@ -1,6 +1,7 @@
 <?php
 $pageTitle = 'مدیریت دسته‌بندی‌ها';
 require_once 'header.php';
+require_once __DIR__ . '/../includes/Category.php';
 
 $categoryObj = new Category();
 

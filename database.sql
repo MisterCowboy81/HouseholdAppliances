@@ -154,13 +154,13 @@ INSERT INTO categories (name, description, status) VALUES
 ('ظرفشویی', 'ماشین ظرفشویی', 'active');
 
 -- Insert sample products
-INSERT INTO products (category_id, name, description, price, discount_price, stock, brand, warranty, status, featured) VALUES
-(1, 'یخچال فریزر سامسونگ مدل RT50', 'یخچال فریزر دوقلو سامسونگ با ظرفیت 500 لیتر', 45000000, 42000000, 10, 'Samsung', '18 ماه', 'active', 1),
-(1, 'یخچال ساید بای ساید ال جی X257', 'یخچال ساید بای ساید ال جی با یخساز اتوماتیک', 55000000, NULL, 5, 'LG', '24 ماه', 'active', 1),
-(2, 'ماشین لباسشویی بوش 8 کیلو', 'ماشین لباسشویی تمام اتوماتیک 8 کیلویی', 32000000, 30000000, 15, 'Bosch', '18 ماه', 'active', 1),
-(3, 'تلویزیون ال ای دی سونی 55 اینچ', 'تلویزیون هوشمند 4K سونی', 28000000, NULL, 8, 'Sony', '24 ماه', 'active', 1),
-(4, 'اجاق گاز فر دار اخوان', 'اجاق گاز 5 شعله با فر گازی', 15000000, 14000000, 12, 'Akhavan', '12 ماه', 'active', 0),
-(5, 'ماکروویو ال جی 28 لیتر', 'ماکروویو دیجیتال 28 لیتری', 8000000, NULL, 20, 'LG', '18 ماه', 'active', 0);
+INSERT INTO products (category_id, name, description, price, discount_price, stock, image, brand, warranty, status, featured) VALUES
+(1, 'یخچال فریزر سامسونگ مدل RT50', 'یخچال فریزر دوقلو سامسونگ با ظرفیت 500 لیتر', 45000000, 42000000, 10, 'refrigerator.jpg', 'Samsung', '18 ماه', 'active', 1),
+(1, 'یخچال ساید بای ساید ال جی X257', 'یخچال ساید بای ساید ال جی با یخساز اتوماتیک', 55000000, NULL, 5, 'refrigerator.jpg', 'LG', '24 ماه', 'active', 1),
+(2, 'ماشین لباسشویی بوش 8 کیلو', 'ماشین لباسشویی تمام اتوماتیک 8 کیلویی', 32000000, 30000000, 15, 'washing_machine.jpg', 'Bosch', '18 ماه', 'active', 1),
+(3, 'تلویزیون ال ای دی سونی 55 اینچ', 'تلویزیون هوشمند 4K سونی', 28000000, NULL, 8, 'tv.jpg', 'Sony', '24 ماه', 'active', 1),
+(4, 'اجاق گاز فر دار اخوان', 'اجاق گاز 5 شعله با فر گازی', 15000000, 14000000, 12, 'gas_stove.jpg', 'Akhavan', '12 ماه', 'active', 0),
+(5, 'ماکروویو ال جی 28 لیتر', 'ماکروویو دیجیتال 28 لیتری', 8000000, NULL, 20, 'microwave.jpg', 'LG', '18 ماه', 'active', 0);
 
 -- Insert default settings
 INSERT INTO settings (setting_key, setting_value) VALUES

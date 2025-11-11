@@ -13,7 +13,12 @@ if (isset($_POST['update_status']) && isset($_POST['order_id'])) {
     } else {
         setFlashMessage('error', $result['message']);
     }
-    redirect(ADMIN_URL . '/orders.php');
+    // Preserve filter when redirecting
+    $redirectUrl = ADMIN_URL . '/orders.php';
+    if (isset($_GET['status']) && !empty($_GET['status'])) {
+        $redirectUrl .= '?status=' . urlencode($_GET['status']);
+    }
+    redirect($redirectUrl);
 }
 
 // Get filters
