@@ -1,0 +1,32 @@
+# Uploads directory - only ignore the content, not the directories
+uploads/products/*
+uploads/categories/*
+!uploads/products/.gitkeep
+!uploads/categories/.gitkeep
+# Allow sample product images
+!uploads/products/refrigerator.jpg
+!uploads/products/washing_machine.jpg
+!uploads/products/tv.jpg
+!uploads/products/gas_stove.jpg
+!uploads/products/microwave.jpg
+!uploads/products/vacuum.jpg
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+/tmp/
+
+# Config files (if they contain sensitive data)
+# includes/config.php
+
