@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/Cart.php';
 require_once __DIR__ . '/../includes/Order.php';
+require_once __DIR__ . '/../includes/Address.php';
 
 requireLogin();
 
@@ -16,6 +17,20 @@ if (isAdmin()) {
 $cart = new Cart();
 $cartItems = $cart->getItems();
 $cartTotal = $cart->getTotal();
+
+if (empty($cartItems)) {
+    setFlashMessage('error', 'سبد خرید شما خالی است');
+    redirect(SITE_URL . '/public/cart.php');
+}
+
+$error = '';
+$orderObj = new Order();
+$addressObj = new Address();
+$userId = getCurrentUserId();
+
+// Get saved addresses
+$savedAddresses = $addressObj->getUserAddresses($userId);
+$defaultAddress = $addressObj->getDefaultAddress($userId);
 
 if (empty($cartItems)) {
     setFlashMessage('error', 'سبد خرید شما خالی است');
@@ -77,6 +92,32 @@ require_once 'header.php';
                             <i class="fas fa-map-marker-alt"></i> اطلاعات ارسال
                         </h2>
                         
+                        <?php if (!empty($savedAddresses)): ?>
+                            <div class="form-group">
+                                <label class="form-label">انتخاب از آدرس‌های ذخیره شده</label>
+                                <select id="saved-address-select" class="form-control" onchange="loadSavedAddress(this.value)">
+                                    <option value="">انتخاب آدرس...</option>
+                                    <?php foreach ($savedAddresses as $addr): ?>
+                                        <option value="<?php echo $addr['id']; ?>" 
+                                                data-phone="<?php echo htmlspecialchars($addr['phone']); ?>"
+                                                data-city="<?php echo htmlspecialchars($addr['city']); ?>"
+                                                data-address="<?php echo htmlspecialchars($addr['address']); ?>"
+                                                data-postal="<?php echo htmlspecialchars($addr['postal_code']); ?>"
+                                                <?php echo ($defaultAddress && $addr['id'] == $defaultAddress['id']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($addr['title']); ?> - <?php echo htmlspecialchars($addr['city']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div style="margin-bottom: 20px; padding: 10px; background: var(--light-color); border-radius: 8px;">
+                                <small>
+                                    <i class="fas fa-info-circle"></i> 
+                                    می‌توانید از آدرس‌های ذخیره شده استفاده کنید یا آدرس جدید وارد کنید.
+                                    <a href="<?php echo SITE_URL; ?>/public/addresses.php" style="color: var(--primary-color);">مدیریت آدرس‌ها</a>
+                                </small>
+                            </div>
+                        <?php endif; ?>
+                        
                         <div class="form-group">
                             <label class="form-label">نام گیرنده <span style="color: red;">*</span></label>
                             <input type="text" class="form-control" value="<?php echo htmlspecialchars($user['full_name']); ?>" readonly>
@@ -84,25 +125,25 @@ require_once 'header.php';
                         
                         <div class="form-group">
                             <label class="form-label">شماره تماس <span style="color: red;">*</span></label>
-                            <input type="text" name="phone" class="form-control" required 
-                                   value="<?php echo htmlspecialchars($user['phone'] ?? ''); ?>">
+                            <input type="text" name="phone" id="phone" class="form-control" required 
+                                   value="<?php echo htmlspecialchars($defaultAddress['phone'] ?? $user['phone'] ?? ''); ?>">
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">شهر <span style="color: red;">*</span></label>
-                            <input type="text" name="city" class="form-control" required 
-                                   value="<?php echo htmlspecialchars($user['city'] ?? ''); ?>">
+                            <input type="text" name="city" id="city" class="form-control" required 
+                                   value="<?php echo htmlspecialchars($defaultAddress['city'] ?? $user['city'] ?? ''); ?>">
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">آدرس کامل <span style="color: red;">*</span></label>
-                            <textarea name="address" class="form-control" required rows="3"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
+                            <textarea name="address" id="address" class="form-control" required rows="3"><?php echo htmlspecialchars($defaultAddress['address'] ?? $user['address'] ?? ''); ?></textarea>
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">کد پستی <span style="color: red;">*</span></label>
-                            <input type="text" name="postal_code" class="form-control" required 
-                                   value="<?php echo htmlspecialchars($user['postal_code'] ?? ''); ?>"
+                            <input type="text" name="postal_code" id="postal_code" class="form-control" required 
+                                   value="<?php echo htmlspecialchars($defaultAddress['postal_code'] ?? $user['postal_code'] ?? ''); ?>"
                                    pattern="[0-9]{10}" 
                                    placeholder="1234567890">
                             <small style="color: var(--text-light);">کد پستی 10 رقمی بدون خط تیره</small>
@@ -190,5 +231,27 @@ require_once 'header.php';
         </form>
     </div>
 </section>
+
+<script>
+function loadSavedAddress(addressId) {
+    if (!addressId) return;
+    
+    const select = document.getElementById('saved-address-select');
+    const option = select.options[select.selectedIndex];
+    
+    document.getElementById('phone').value = option.dataset.phone || '';
+    document.getElementById('city').value = option.dataset.city || '';
+    document.getElementById('address').value = option.dataset.address || '';
+    document.getElementById('postal_code').value = option.dataset.postal || '';
+}
+
+// Load default address on page load if available
+window.addEventListener('DOMContentLoaded', function() {
+    const select = document.getElementById('saved-address-select');
+    if (select && select.value) {
+        loadSavedAddress(select.value);
+    }
+});
+</script>
 
 <?php require_once 'footer.php'; ?>
