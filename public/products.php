@@ -134,11 +134,13 @@ if (isset($filters['category_id'])) {
                             </div>
                             
                             <div class="product-actions">
-                                <button class="btn btn-primary btn-cart add-to-cart" data-product-id="<?php echo $product['id']; ?>">
-                                    <i class="fas fa-shopping-cart"></i> افزودن به سبد
-                                </button>
+                                <?php if (!isLoggedIn() || !isAdmin()): ?>
+                                    <button class="btn btn-primary btn-cart add-to-cart" data-product-id="<?php echo $product['id']; ?>">
+                                        <i class="fas fa-shopping-cart"></i> افزودن به سبد
+                                    </button>
+                                <?php endif; ?>
                                 <a href="<?php echo SITE_URL; ?>/public/product-detail.php?id=<?php echo $product['id']; ?>" class="btn btn-outline">
-                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-eye"></i> مشاهده
                                 </a>
                             </div>
                         </div>

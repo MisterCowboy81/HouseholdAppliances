@@ -11,6 +11,10 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 
+# Custom Error Pages
+ErrorDocument 404 /HouseholdAppliances/404.php
+ErrorDocument 500 /HouseholdAppliances/500.php
+
 # Security: Block access to sensitive files
 <FilesMatch "^\.">
     Order allow,deny
