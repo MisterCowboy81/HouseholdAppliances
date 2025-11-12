@@ -60,20 +60,30 @@ $currentUser = getCurrentUser();
                 </div>
                 
                 <div class="header-actions">
-                    <?php if (isLoggedIn() && !isAdmin()): ?>
-                        <a href="<?php echo SITE_URL; ?>/public/profile.php" class="header-link">
-                            <i class="fas fa-user"></i>
-                            <span>حساب کاربری</span>
+                    <?php if (isLoggedIn()): ?>
+                        <?php if (!isAdmin()): ?>
+                            <a href="<?php echo SITE_URL; ?>/public/profile.php" class="header-link">
+                                <i class="fas fa-user"></i>
+                                <span>حساب کاربری</span>
+                            </a>
+                            
+                            <a href="<?php echo SITE_URL; ?>/public/cart.php" class="header-link">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>سبد خرید</span>
+                                <?php if ($cartCount > 0): ?>
+                                    <span class="cart-badge"><?php echo $cartCount; ?></span>
+                                <?php endif; ?>
+                            </a>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <a href="<?php echo SITE_URL; ?>/public/cart.php" class="header-link">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>سبد خرید</span>
+                            <?php if ($cartCount > 0): ?>
+                                <span class="cart-badge"><?php echo $cartCount; ?></span>
+                            <?php endif; ?>
                         </a>
                     <?php endif; ?>
-                    
-                    <a href="<?php echo SITE_URL; ?>/public/cart.php" class="header-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>سبد خرید</span>
-                        <?php if ($cartCount > 0): ?>
-                            <span class="cart-badge"><?php echo $cartCount; ?></span>
-                        <?php endif; ?>
-                    </a>
                 </div>
             </div>
         </div>

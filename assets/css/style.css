@@ -795,3 +795,66 @@ footer {
     background: #dbeafe;
     color: #1e40af;
 }
+
+.badge-secondary {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+/* Enhanced Responsive Design for Mobile */
+@media (max-width: 768px) {
+    /* Profile Layout */
+    .profile-layout {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Hero Section */
+    .hero h1 {
+        font-size: 2rem !important;
+    }
+    
+    .hero p {
+        font-size: 1rem !important;
+    }
+    
+    /* Header */
+    .header-main .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .search-box {
+        width: 100%;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Navigation */
+    nav ul {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    nav li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    nav a {
+        display: block;
+        width: 100%;
+    }
+    
+    /* Checkout Layout */
+    section .container > form > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Order Success Buttons */
+    div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+}

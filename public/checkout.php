@@ -7,6 +7,12 @@ require_once __DIR__ . '/../includes/Order.php';
 
 requireLogin();
 
+// Prevent admin from accessing checkout
+if (isAdmin()) {
+    setFlashMessage('error', 'مدیران نمی‌توانند از بخش خرید استفاده کنند');
+    redirect(SITE_URL . '/admin/index.php');
+}
+
 $cart = new Cart();
 $cartItems = $cart->getItems();
 $cartTotal = $cart->getTotal();
