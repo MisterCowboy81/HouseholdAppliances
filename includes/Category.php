@@ -127,12 +127,14 @@ class Category {
     /**
      * Get categories with product count
      */
-    public function getCategoriesWithCount() {
+    public function getCategoriesWithCount($showAll = false) {
+        $whereClause = $showAll ? '' : "WHERE c.status = 'active'";
+        
         $stmt = $this->db->prepare("
             SELECT c.*, COUNT(p.id) as product_count 
             FROM categories c 
             LEFT JOIN products p ON c.id = p.category_id AND p.status = 'active'
-            WHERE c.status = 'active'
+            $whereClause
             GROUP BY c.id 
             ORDER BY c.name ASC
         ");

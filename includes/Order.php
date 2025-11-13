@@ -125,6 +125,24 @@ class Order {
     }
     
     /**
+     * Get order by order number
+     */
+    public function getByOrderNumber($orderNumber, $userId = null) {
+        if ($userId !== null) {
+            $stmt = $this->db->prepare("SELECT * FROM orders WHERE order_number = ? AND user_id = ?");
+            $stmt->bind_param("si", $orderNumber, $userId);
+        } else {
+            $stmt = $this->db->prepare("SELECT * FROM orders WHERE order_number = ?");
+            $stmt->bind_param("s", $orderNumber);
+        }
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_assoc();
+    }
+    
+    /**
      * Get order items
      */
     public function getItems($orderId) {

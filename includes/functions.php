@@ -238,3 +238,10 @@ function timeAgo($datetime) {
         return date('Y/m/d', $timestamp);
     }
 }
+
+/**
+ * Format date (Persian)
+ */
+function formatDate($datetime, $format = 'Y/m/d H:i') {
+    return date($format, strtotime($datetime));
+}

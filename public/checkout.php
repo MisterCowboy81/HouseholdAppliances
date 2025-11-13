@@ -7,9 +7,24 @@ require_once __DIR__ . '/../includes/Order.php';
 
 requireLogin();
 
+// Prevent admin from accessing checkout
+if (isAdmin()) {
+    setFlashMessage('error', 'مدیران نمی‌توانند از بخش خرید استفاده کنند');
+    redirect(SITE_URL . '/admin/index.php');
+}
+
 $cart = new Cart();
 $cartItems = $cart->getItems();
 $cartTotal = $cart->getTotal();
+
+if (empty($cartItems)) {
+    setFlashMessage('error', 'سبد خرید شما خالی است');
+    redirect(SITE_URL . '/public/cart.php');
+}
+
+$error = '';
+$orderObj = new Order();
+$userId = getCurrentUserId();
 
 if (empty($cartItems)) {
     setFlashMessage('error', 'سبد خرید شما خالی است');
@@ -70,6 +85,14 @@ require_once 'header.php';
                         <h2 style="margin-bottom: 20px; color: var(--dark-color);">
                             <i class="fas fa-map-marker-alt"></i> اطلاعات ارسال
                         </h2>
+                        
+                        <div style="margin-bottom: 20px; padding: 15px; background: #dbeafe; border-radius: 8px; border-right: 4px solid var(--primary-color);">
+                            <small>
+                                <i class="fas fa-info-circle"></i> 
+                                اطلاعات زیر از پروفایل شما بارگذاری شده است. در صورت نیاز می‌توانید آنها را ویرایش کنید.
+                                برای تغییر دائمی، <a href="<?php echo SITE_URL; ?>/public/profile.php" style="color: var(--primary-color); font-weight: bold;">پروفایل</a> خود را بروزرسانی کنید.
+                            </small>
+                        </div>
                         
                         <div class="form-group">
                             <label class="form-label">نام گیرنده <span style="color: red;">*</span></label>

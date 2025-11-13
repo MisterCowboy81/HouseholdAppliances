@@ -116,7 +116,8 @@ $user = getCurrentUser();
                         
                         <div class="form-group">
                             <label class="form-label">آدرس</label>
-                            <textarea name="address" class="form-control" rows="3"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
+                            <textarea name="address" class="form-control" rows="3" placeholder="آدرس کامل محل سکونت خود را وارد کنید"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
+                            <small style="color: var(--text-light);">این آدرس برای ارسال سفارشات شما استفاده می‌شود</small>
                         </div>
                         
                         <div class="form-group">

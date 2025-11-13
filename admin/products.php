@@ -25,8 +25,8 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
 $pageTitle = 'مدیریت محصولات';
 require_once 'header.php';
 
-// Get all products
-$products = $productObj->getProducts([], 100, 0);
+// Get all products (including inactive for admin)
+$products = $productObj->getProducts(['show_all' => true], 100, 0);
 $categories = $categoryObj->getAll('all');
 ?>
 

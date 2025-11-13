@@ -1,7 +1,11 @@
 <?php
-$pageTitle = 'مدیریت سفارش‌ها';
-require_once 'header.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/Order.php';
+
+requireLogin();
+requireAdmin();
 
 $orderObj = new Order();
 
@@ -31,6 +35,9 @@ if (isset($_GET['payment_status']) && !empty($_GET['payment_status'])) {
 }
 
 $orders = $orderObj->getAllOrders($filters, 100, 0);
+
+$pageTitle = 'مدیریت سفارش‌ها';
+require_once 'header.php';
 ?>
 
 <div class="page-header">

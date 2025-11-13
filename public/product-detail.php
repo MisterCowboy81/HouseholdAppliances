@@ -117,7 +117,7 @@ $hasDiscount = !empty($product['discount_price']);
                 </div>
                 
                 <!-- Add to Cart -->
-                <?php if ($product['stock'] > 0): ?>
+                <?php if ($product['stock'] > 0 && (!isLoggedIn() || !isAdmin())): ?>
                     <div style="display: flex; gap: 15px; margin-bottom: 30px;">
                         <div style="flex: 0 0 120px;">
                             <label class="form-label">تعداد:</label>
@@ -133,7 +133,11 @@ $hasDiscount = !empty($product['discount_price']);
                             </button>
                         </div>
                     </div>
-                <?php else: ?>
+                <?php elseif (isAdmin()): ?>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> مدیران امکان خرید محصول را ندارند
+                    </div>
+                <?php elseif ($product['stock'] <= 0): ?>
                     <div class="alert alert-warning">
                         <i class="fas fa-exclamation-triangle"></i> این محصول در حال حاضر موجود نیست
                     </div>

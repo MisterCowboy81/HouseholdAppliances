@@ -2,6 +2,12 @@
 $pageTitle = 'سبد خرید';
 require_once 'header.php';
 
+// Prevent admin from accessing cart
+if (isAdmin()) {
+    setFlashMessage('error', 'مدیران نمی‌توانند از بخش خرید استفاده کنند');
+    redirect(SITE_URL . '/admin/index.php');
+}
+
 $cartItems = $cart->getItems();
 $cartTotal = $cart->getTotal();
 ?>
