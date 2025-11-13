@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$categories = $categoryObj->getCategoriesWithCount();
+$categories = $categoryObj->getCategoriesWithCount(true); // Show all including inactive
 $editCategory = null;
 
 if (isset($_GET['edit'])) {
