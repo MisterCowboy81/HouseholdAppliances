@@ -80,9 +80,6 @@ $user = getCurrentUser();
                     </div>
                     
                     <div style="border-top: 1px solid var(--border-color); padding-top: 20px;">
-                        <a href="<?php echo SITE_URL; ?>/public/addresses.php" class="btn btn-primary" style="width: 100%; text-align: center; margin-bottom: 10px;">
-                            <i class="fas fa-map-marked-alt"></i> دفترچه آدرس
-                        </a>
                         <a href="<?php echo SITE_URL; ?>/public/logout.php" class="btn btn-danger" style="width: 100%; text-align: center;">
                             <i class="fas fa-sign-out-alt"></i> خروج
                         </a>
@@ -119,7 +116,8 @@ $user = getCurrentUser();
                         
                         <div class="form-group">
                             <label class="form-label">آدرس</label>
-                            <textarea name="address" class="form-control" rows="3"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
+                            <textarea name="address" class="form-control" rows="3" placeholder="آدرس کامل محل سکونت خود را وارد کنید"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
+                            <small style="color: var(--text-light);">این آدرس برای ارسال سفارشات شما استفاده می‌شود</small>
                         </div>
                         
                         <div class="form-group">

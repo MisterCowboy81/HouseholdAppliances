@@ -1,10 +1,37 @@
 <?php
-$pageTitle = 'مدیریت کاربران';
-require_once 'header.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/User.php';
 
+requireLogin();
+requireAdmin();
+
 $userObj = new User();
+
+// Handle delete
+if (isset($_GET['delete']) && isset($_GET['id'])) {
+    $userId = intval($_GET['id']);
+    $currentUserId = getCurrentUserId();
+    
+    // Prevent deleting yourself
+    if ($userId == $currentUserId) {
+        setFlashMessage('error', 'نمی‌توانید حساب کاربری خود را حذف کنید');
+    } else {
+        $result = $userObj->deleteUser($userId);
+        if ($result['success']) {
+            setFlashMessage('success', $result['message']);
+        } else {
+            setFlashMessage('error', $result['message']);
+        }
+    }
+    redirect(ADMIN_URL . '/users.php');
+}
+
 $users = $userObj->getAllUsers(100, 0);
+
+$pageTitle = 'مدیریت کاربران';
+require_once 'header.php';
 ?>
 
 <div class="page-header">
@@ -27,6 +54,7 @@ $users = $userObj->getAllUsers(100, 0);
                         <th>نقش</th>
                         <th>وضعیت</th>
                         <th>تاریخ ثبت‌نام</th>
+                        <th style="width: 120px;">عملیات</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +85,22 @@ $users = $userObj->getAllUsers(100, 0);
                                 </span>
                             </td>
                             <td><?php echo date('Y/m/d', strtotime($user['created_at'])); ?></td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <a href="<?php echo ADMIN_URL; ?>/user-edit.php?id=<?php echo $user['id']; ?>" 
+                                       class="btn btn-sm btn-outline" title="ویرایش">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <?php if ($user['id'] != getCurrentUserId()): ?>
+                                        <a href="?delete=1&id=<?php echo $user['id']; ?>" 
+                                           class="btn btn-sm btn-danger" 
+                                           onclick="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟')"
+                                           title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

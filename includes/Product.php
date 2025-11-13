@@ -18,9 +18,14 @@ class Product {
      * Get all products with optional filters
      */
     public function getProducts($filters = [], $limit = 20, $offset = 0) {
-        $where = ["p.status = 'active'"];
+        $where = [];
         $params = [];
         $types = '';
+        
+        // Only filter by active status if not showing all
+        if (!isset($filters['show_all']) || !$filters['show_all']) {
+            $where[] = "p.status = 'active'";
+        }
         
         if (!empty($filters['category_id'])) {
             $where[] = "p.category_id = ?";
@@ -53,7 +58,7 @@ class Product {
             $where[] = "p.featured = 1";
         }
         
-        $whereClause = implode(' AND ', $where);
+        $whereClause = !empty($where) ? implode(' AND ', $where) : '1=1';
         $orderBy = $filters['order_by'] ?? 'p.created_at DESC';
         
         $sql = "SELECT p.*, c.name as category_name 

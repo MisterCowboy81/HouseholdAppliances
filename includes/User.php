@@ -209,4 +209,24 @@ class User {
         
         return $users;
     }
+    
+    /**
+     * Delete user (admin only)
+     */
+    public function deleteUser($userId) {
+        // Prevent deleting admin users (optional safety check)
+        $user = $this->getUserById($userId);
+        if (!$user) {
+            return ['success' => false, 'message' => 'کاربر یافت نشد'];
+        }
+        
+        $stmt = $this->db->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bind_param("i", $userId);
+        
+        if ($stmt->execute()) {
+            return ['success' => true, 'message' => 'کاربر با موفقیت حذف شد'];
+        }
+        
+        return ['success' => false, 'message' => 'خطا در حذف کاربر'];
+    }
 }
