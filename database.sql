@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS settings (
 
 -- Insert default admin user (password: admin123)
 INSERT INTO users (username, email, password, full_name, role, status) VALUES
-('admin', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin', 'active');
+('admin', 'admin@example.com', '$2y$10$WKP6XIRyEDX.hmugWmUFSuj2Hor3bDtyZHrgDBRtpv5NlQzt4VWOe', 'Administrator', 'admin', 'active');
 
 -- Insert sample categories
 INSERT INTO categories (name, description, status) VALUES
