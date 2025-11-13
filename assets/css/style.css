@@ -968,6 +968,7 @@ footer {
 @media (max-width: 768px) {
     /* Profile Layout */
     .profile-layout {
+        display: block !important;
         grid-template-columns: 1fr !important;
     }
     
