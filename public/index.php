@@ -29,10 +29,16 @@ $latestProducts = $productObj->getLatestProducts(8);
             <?php foreach ($featuredProducts as $product): ?>
                 <div class="product-card">
                     <div class="product-image">
-                        <?php if ($product['image']): ?>
-                            <img src="<?php echo SITE_URL; ?>/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                        <?php 
+                        $imagePath = __DIR__ . '/../uploads/products/' . ($product['image'] ?? '');
+                        if ($product['image'] && file_exists($imagePath)): 
+                        ?>
+                            <img src="<?php echo SITE_URL; ?>/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" onerror="this.style.display='none';">
                         <?php else: ?>
-                            <img src="<?php echo SITE_URL; ?>/assets/images/no-image.png" alt="بدون تصویر">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2; width: 100%;">
+                                <i class="fas fa-image" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 10px;"></i>
+                                <div style="color: #9ca3af; font-size: 0.9rem;">بدون تصویر</div>
+                            </div>
                         <?php endif; ?>
                         
                         <?php if ($product['discount_price']): ?>
@@ -75,7 +81,11 @@ $latestProducts = $productObj->getLatestProducts(8);
         </div>
         
         <?php if (empty($featuredProducts)): ?>
-            <p class="text-center">محصولی یافت نشد</p>
+            <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 12px; box-shadow: var(--shadow);">
+                <i class="fas fa-box-open" style="font-size: 4rem; color: var(--text-light); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--dark-color); margin-bottom: 10px;">محصولی یافت نشد</h3>
+                <p style="color: var(--text-light);">در حال حاضر محصول ویژه‌ای وجود ندارد</p>
+            </div>
         <?php endif; ?>
     </div>
 </section>
@@ -112,14 +122,20 @@ $latestProducts = $productObj->getLatestProducts(8);
             <p class="section-subtitle">آخرین محصولات اضافه شده</p>
         </div>
         
-        <div class="grid grid-4">
+        <div class="grid grid-3">
             <?php foreach ($latestProducts as $product): ?>
                 <div class="product-card">
                     <div class="product-image">
-                        <?php if ($product['image']): ?>
-                            <img src="<?php echo SITE_URL; ?>/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                        <?php 
+                        $imagePath = __DIR__ . '/../uploads/products/' . ($product['image'] ?? '');
+                        if ($product['image'] && file_exists($imagePath)): 
+                        ?>
+                            <img src="<?php echo SITE_URL; ?>/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" onerror="this.style.display='none';">
                         <?php else: ?>
-                            <img src="<?php echo SITE_URL; ?>/assets/images/no-image.png" alt="بدون تصویر">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2; width: 100%;">
+                                <i class="fas fa-image" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 10px;"></i>
+                                <div style="color: #9ca3af; font-size: 0.9rem;">بدون تصویر</div>
+                            </div>
                         <?php endif; ?>
                         
                         <?php if ($product['discount_price']): ?>
@@ -160,6 +176,14 @@ $latestProducts = $productObj->getLatestProducts(8);
                 </div>
             <?php endforeach; ?>
         </div>
+        
+        <?php if (empty($latestProducts)): ?>
+            <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 12px; box-shadow: var(--shadow); margin-top: 30px;">
+                <i class="fas fa-box-open" style="font-size: 4rem; color: var(--text-light); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--dark-color); margin-bottom: 10px;">محصولی یافت نشد</h3>
+                <p style="color: var(--text-light);">در حال حاضر محصول جدیدی وجود ندارد</p>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 

@@ -95,7 +95,30 @@ class Cart {
         $stmt->bind_param("isi", $quantity, $sessionId, $productId);
         
         if ($stmt->execute()) {
-            return ['success' => true, 'message' => 'سبد خرید بروزرسانی شد'];
+            // Get updated item details
+            $stmt = $this->db->prepare("
+                SELECT 
+                    c.quantity,
+                    COALESCE(p.discount_price, p.price) as final_price,
+                    (c.quantity * COALESCE(p.discount_price, p.price)) as subtotal
+                FROM cart c
+                INNER JOIN products p ON c.product_id = p.id
+                WHERE c.session_id = ? AND c.product_id = ?
+            ");
+            $stmt->bind_param("si", $sessionId, $productId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $item = $result->fetch_assoc();
+            
+            // Get total cart amount
+            $total = $this->getTotal();
+            
+            return [
+                'success' => true, 
+                'message' => 'سبد خرید بروزرسانی شد',
+                'subtotal' => $item['subtotal'] ?? 0,
+                'total' => $total
+            ];
         }
         
         return ['success' => false, 'message' => 'خطا در بروزرسانی'];
@@ -111,7 +134,16 @@ class Cart {
         $stmt->bind_param("si", $sessionId, $productId);
         
         if ($stmt->execute()) {
-            return ['success' => true, 'message' => 'محصول از سبد خرید حذف شد'];
+            // Get updated total cart amount
+            $total = $this->getTotal();
+            $count = $this->getCount();
+            
+            return [
+                'success' => true, 
+                'message' => 'محصول از سبد خرید حذف شد',
+                'total' => $total,
+                'count' => $count
+            ];
         }
         
         return ['success' => false, 'message' => 'خطا در حذف محصول'];

@@ -48,52 +48,54 @@ $currentUser = getCurrentUser();
         
         <div class="header-main">
             <div class="container">
-                <a href="<?php echo SITE_URL; ?>/public/index.php" class="logo">
-                    <i class="fas fa-store"></i> <?php echo SITE_NAME; ?>
-                </a>
-                
-                <div class="search-box">
-                    <form action="<?php echo SITE_URL; ?>/public/products.php" method="GET" class="search-form">
-                        <input type="text" name="q" placeholder="جستجوی محصولات..." value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?>">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </form>
-                </div>
-                
-                <div class="header-actions">
-                    <?php if (isLoggedIn()): ?>
-                        <?php if (!isAdmin()): ?>
-                            <a href="<?php echo SITE_URL; ?>/public/profile.php" class="header-link">
-                                <i class="fas fa-user"></i>
-                                <span>حساب کاربری</span>
-                            </a>
-                            
+                <div style="display: flex; align-items: center; gap: 20px; width: 100%;">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="منوی موبایل">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <a href="<?php echo SITE_URL; ?>/public/index.php" class="logo">
+                        <i class="fas fa-store"></i> <?php echo SITE_NAME; ?>
+                    </a>
+                    
+                    <div class="search-box">
+                        <form action="<?php echo SITE_URL; ?>/public/products.php" method="GET" class="search-form">
+                            <input type="text" name="q" placeholder="جستجوی محصولات..." value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?>">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <?php if (isLoggedIn()): ?>
+                            <?php if (!isAdmin()): ?>
+                                <a href="<?php echo SITE_URL; ?>/public/profile.php" class="header-link">
+                                    <i class="fas fa-user"></i>
+                                    <span>حساب کاربری</span>
+                                </a>
+                                
+                                <a href="<?php echo SITE_URL; ?>/public/cart.php" class="header-link">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>سبد خرید</span>
+                                    <span class="cart-badge" style="<?php echo $cartCount > 0 ? '' : 'display: none;'; ?>"><?php echo $cartCount; ?></span>
+                                </a>
+                            <?php endif; ?>
+                        <?php else: ?>
                             <a href="<?php echo SITE_URL; ?>/public/cart.php" class="header-link">
                                 <i class="fas fa-shopping-cart"></i>
                                 <span>سبد خرید</span>
-                                <?php if ($cartCount > 0): ?>
-                                    <span class="cart-badge"><?php echo $cartCount; ?></span>
-                                <?php endif; ?>
+                                <span class="cart-badge" style="<?php echo $cartCount > 0 ? '' : 'display: none;'; ?>"><?php echo $cartCount; ?></span>
                             </a>
                         <?php endif; ?>
-                    <?php else: ?>
-                        <a href="<?php echo SITE_URL; ?>/public/cart.php" class="header-link">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>سبد خرید</span>
-                            <?php if ($cartCount > 0): ?>
-                                <span class="cart-badge"><?php echo $cartCount; ?></span>
-                            <?php endif; ?>
-                        </a>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <nav>
+        <nav id="mainNav">
             <div class="container">
                 <ul>
                     <li><a href="<?php echo SITE_URL; ?>/public/index.php"><i class="fas fa-home"></i> صفحه اصلی</a></li>
                     <li class="dropdown">
-                        <a href="<?php echo SITE_URL; ?>/public/products.php"><i class="fas fa-boxes"></i> محصولات <i class="fas fa-chevron-down"></i></a>
+                        <a href="<?php echo SITE_URL; ?>/public/products.php" class="dropdown-toggle"><i class="fas fa-boxes"></i> محصولات <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo SITE_URL; ?>/public/products.php">همه محصولات</a></li>
                             <?php foreach ($categories as $category): ?>

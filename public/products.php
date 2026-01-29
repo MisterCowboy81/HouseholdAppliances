@@ -66,8 +66,8 @@ if (isset($filters['category_id'])) {
         </div>
         
         <!-- Filters and Sorting -->
-        <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 30px; box-shadow: var(--shadow);">
-            <form method="GET" id="filter-form" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+        <div class="filters-container" style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 30px; box-shadow: var(--shadow);">
+            <form method="GET" id="filter-form" class="filter-form">
                 <?php if (isset($_GET['q'])): ?>
                     <input type="hidden" name="q" value="<?php echo htmlspecialchars($_GET['q']); ?>">
                 <?php endif; ?>
@@ -99,14 +99,20 @@ if (isset($filters['category_id'])) {
         
         <!-- Products Grid -->
         <?php if (!empty($products)): ?>
-            <div class="grid grid-4">
+            <div class="grid grid-3">
                 <?php foreach ($products as $product): ?>
                     <div class="product-card">
                         <div class="product-image">
-                            <?php if ($product['image']): ?>
-                                <img src="<?php echo SITE_URL; ?>/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                            <?php 
+                            $imagePath = __DIR__ . '/../uploads/products/' . ($product['image'] ?? '');
+                            if ($product['image'] && file_exists($imagePath)): 
+                            ?>
+                                <img src="<?php echo SITE_URL; ?>/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" onerror="this.style.display='none';">
                             <?php else: ?>
-                                <img src="<?php echo SITE_URL; ?>/assets/images/no-image.png" alt="بدون تصویر">
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2; width: 100%;">
+                                    <i class="fas fa-image" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 10px;"></i>
+                                    <div style="color: #9ca3af; font-size: 0.9rem;">بدون تصویر</div>
+                                </div>
                             <?php endif; ?>
                             
                             <?php if ($product['discount_price']): ?>
@@ -150,20 +156,24 @@ if (isset($filters['category_id'])) {
             
             <!-- Pagination -->
             <?php if ($totalPages > 1): ?>
-                <div style="display: flex; justify-content: center; gap: 10px; margin-top: 40px;">
+                <div class="pagination-container" style="display: flex; justify-content: center; gap: 10px; margin-top: 40px; flex-wrap: wrap;">
                     <?php if ($page > 1): ?>
-                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $page - 1])); ?>" class="btn btn-outline">قبلی</a>
+                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $page - 1])); ?>" class="btn btn-outline">
+                            <i class="fas fa-chevron-right"></i> قبلی
+                        </a>
                     <?php endif; ?>
                     
                     <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                         <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $i])); ?>" 
-                           class="btn <?php echo $i == $page ? 'btn-primary' : 'btn-outline'; ?>">
+                           class="btn <?php echo $i == $page ? 'btn-primary' : 'btn-outline'; ?> pagination-btn">
                             <?php echo $i; ?>
                         </a>
                     <?php endfor; ?>
                     
                     <?php if ($page < $totalPages): ?>
-                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $page + 1])); ?>" class="btn btn-outline">بعدی</a>
+                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $page + 1])); ?>" class="btn btn-outline">
+                            بعدی <i class="fas fa-chevron-left"></i>
+                        </a>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>

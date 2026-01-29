@@ -59,7 +59,7 @@ $cartTotal = $cart->getTotal();
                                            max="<?php echo $item['stock']; ?>"
                                            data-product-id="<?php echo $item['product_id']; ?>">
                                 </td>
-                                <td><strong><?php echo formatPrice($item['subtotal']); ?></strong></td>
+                                <td><strong class="item-subtotal"><?php echo formatPrice($item['subtotal']); ?></strong></td>
                                 <td>
                                     <button class="btn btn-danger remove-from-cart" data-product-id="<?php echo $item['product_id']; ?>">
                                         <i class="fas fa-trash"></i>
@@ -84,7 +84,7 @@ $cartTotal = $cart->getTotal();
                     <div style="border-top: 1px solid var(--border-color); padding-top: 20px;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                             <span>جمع کل:</span>
-                            <strong style="font-size: 1.5rem; color: var(--primary-color);"><?php echo formatPrice($cartTotal); ?></strong>
+                            <strong class="cart-total-amount" style="font-size: 1.5rem; color: var(--primary-color);"><?php echo formatPrice($cartTotal); ?></strong>
                         </div>
                         
                         <div style="margin-top: 20px;">

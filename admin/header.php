@@ -21,19 +21,28 @@ $currentUser = getCurrentUser();
 <body style="background: #f3f4f6;">
     
     <!-- Admin Header -->
-    <header style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <div style="padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 30px;">
-                <h1 style="color: white; font-size: 1.5rem; margin: 0;">
-                    <i class="fas fa-user-shield"></i> پنل مدیریت
+    <header class="admin-header" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); box-shadow: 0 4px 20px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 1000;">
+        <div style="padding: 18px 35px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <button class="admin-menu-toggle" id="adminMenuToggle" style="display: none; background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 1.2rem; transition: all 0.3s ease;">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 style="color: white; font-size: 1.6rem; margin: 0; font-weight: 800; display: flex; align-items: center; gap: 12px;">
+                    <i class="fas fa-user-shield" style="font-size: 1.8rem;"></i> 
+                    <span>پنل مدیریت</span>
                 </h1>
-                <a href="<?php echo SITE_URL; ?>/public/index.php" target="_blank" style="color: white; opacity: 0.9;">
+                <a href="<?php echo SITE_URL; ?>/public/index.php" target="_blank" style="color: white; opacity: 0.95; padding: 8px 16px; border-radius: 8px; background: rgba(255,255,255,0.1); transition: all 0.3s ease; text-decoration: none; font-weight: 500;">
                     <i class="fas fa-external-link-alt"></i> مشاهده سایت
                 </a>
             </div>
-            <div style="color: white;">
-                <span><?php echo htmlspecialchars($currentUser['full_name']); ?></span>
-                <a href="<?php echo SITE_URL; ?>/public/logout.php" style="color: white; margin-right: 20px;">
+            <div style="color: white; display: flex; align-items: center; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span style="font-weight: 500;"><?php echo htmlspecialchars($currentUser['full_name']); ?></span>
+                </div>
+                <a href="<?php echo SITE_URL; ?>/public/logout.php" style="color: white; margin-right: 0; padding: 8px 16px; border-radius: 8px; background: rgba(255,255,255,0.1); transition: all 0.3s ease; text-decoration: none; font-weight: 500;">
                     <i class="fas fa-sign-out-alt"></i> خروج
                 </a>
             </div>
@@ -41,38 +50,38 @@ $currentUser = getCurrentUser();
     </header>
     
     <!-- Admin Layout -->
-    <div style="display: flex; min-height: calc(100vh - 60px);">
+    <div class="admin-layout" style="display: flex; min-height: calc(100vh - 60px);">
         <!-- Sidebar -->
-        <aside style="width: 260px; background: white; box-shadow: 2px 0 4px rgba(0,0,0,0.05);">
-            <nav style="padding: 20px 0;">
-                <ul style="list-style: none; padding: 0; margin: 0;">
+        <aside class="admin-sidebar">
+            <nav class="admin-sidebar-nav">
+                <ul class="admin-menu-list">
                     <li>
-                        <a href="<?php echo ADMIN_URL; ?>/index.php" style="display: flex; align-items: center; padding: 15px 25px; color: var(--text-color); transition: all 0.3s;">
-                            <i class="fas fa-chart-line" style="width: 25px;"></i>
+                        <a href="<?php echo ADMIN_URL; ?>/index.php" class="admin-nav-link">
+                            <i class="fas fa-chart-line"></i>
                             <span>داشبورد</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo ADMIN_URL; ?>/products.php" style="display: flex; align-items: center; padding: 15px 25px; color: var(--text-color); transition: all 0.3s;">
-                            <i class="fas fa-box" style="width: 25px;"></i>
+                        <a href="<?php echo ADMIN_URL; ?>/products.php" class="admin-nav-link">
+                            <i class="fas fa-box"></i>
                             <span>محصولات</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo ADMIN_URL; ?>/categories.php" style="display: flex; align-items: center; padding: 15px 25px; color: var(--text-color); transition: all 0.3s;">
-                            <i class="fas fa-tags" style="width: 25px;"></i>
+                        <a href="<?php echo ADMIN_URL; ?>/categories.php" class="admin-nav-link">
+                            <i class="fas fa-tags"></i>
                             <span>دسته‌بندی‌ها</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo ADMIN_URL; ?>/orders.php" style="display: flex; align-items: center; padding: 15px 25px; color: var(--text-color); transition: all 0.3s;">
-                            <i class="fas fa-shopping-bag" style="width: 25px;"></i>
+                        <a href="<?php echo ADMIN_URL; ?>/orders.php" class="admin-nav-link">
+                            <i class="fas fa-shopping-bag"></i>
                             <span>سفارش‌ها</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo ADMIN_URL; ?>/users.php" style="display: flex; align-items: center; padding: 15px 25px; color: var(--text-color); transition: all 0.3s;">
-                            <i class="fas fa-users" style="width: 25px;"></i>
+                        <a href="<?php echo ADMIN_URL; ?>/users.php" class="admin-nav-link">
+                            <i class="fas fa-users"></i>
                             <span>کاربران</span>
                         </a>
                     </li>
@@ -81,7 +90,7 @@ $currentUser = getCurrentUser();
         </aside>
         
         <!-- Main Content -->
-        <main style="flex: 1; padding: 30px;">
+        <main class="admin-main-content" style="flex: 1; padding: 30px; min-width: 0;">
             <?php
             $flash = getFlashMessage();
             if ($flash):

@@ -56,7 +56,7 @@
     </footer>
     
     <!-- Back to Top Button -->
-    <a href="#" class="back-to-top" style="display: none; position: fixed; bottom: 30px; left: 30px; background: var(--primary-color); color: white; width: 50px; height: 50px; text-align: center; line-height: 50px; border-radius: 50%; box-shadow: var(--shadow-lg); z-index: 999;">
+    <a href="#" class="back-to-top" style="display: none; position: fixed; bottom: 30px; left: 30px; background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%); color: white; width: 55px; height: 55px; text-align: center; line-height: 55px; border-radius: 50%; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4); z-index: 999; transition: all 0.3s ease; text-decoration: none;">
         <i class="fas fa-arrow-up"></i>
     </a>
     

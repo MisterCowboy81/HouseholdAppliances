@@ -6,32 +6,67 @@
     <script>
         // Admin-specific JS
         $(document).ready(function() {
-            // Highlight active menu item
-            var currentPath = window.location.pathname;
-            $('aside nav a').each(function() {
-                if ($(this).attr('href') === currentPath || currentPath.includes($(this).attr('href'))) {
-                    $(this).css({
-                        'background': 'var(--primary-color)',
-                        'color': 'white',
-                        'border-radius': '8px',
-                        'margin': '0 10px'
+            // Set sidebar top position based on header height
+            function updateSidebarPosition() {
+                if ($(window).width() > 768) {
+                    var headerHeight = $('.admin-header').outerHeight() || 70;
+                    $('.admin-sidebar').css({
+                        'top': headerHeight + 'px',
+                        'max-height': 'calc(100vh - ' + headerHeight + 'px)'
                     });
+                }
+            }
+            
+            // Update on load and resize
+            updateSidebarPosition();
+            $(window).on('resize', function() {
+                updateSidebarPosition();
+            });
+            
+            // Mobile menu toggle
+            $('#adminMenuToggle').on('click', function() {
+                $('.admin-sidebar').toggleClass('mobile-open');
+                $('body').toggleClass('admin-sidebar-open');
+                var icon = $(this).find('i');
+                if (icon.hasClass('fa-bars')) {
+                    icon.removeClass('fa-bars').addClass('fa-times');
+                } else {
+                    icon.removeClass('fa-times').addClass('fa-bars');
                 }
             });
             
-            // Hover effect for menu items
-            $('aside nav a').hover(
-                function() {
-                    if (!$(this).css('background-color').includes('rgb(37, 99, 235)')) {
-                        $(this).css('background', '#f3f4f6');
-                    }
-                },
-                function() {
-                    if (!$(this).css('background-color').includes('rgb(37, 99, 235)')) {
-                        $(this).css('background', 'transparent');
+            // Close sidebar when clicking outside on mobile
+            $(document).on('click', function(e) {
+                if ($(window).width() <= 768) {
+                    if (!$(e.target).closest('.admin-sidebar, #adminMenuToggle').length) {
+                        $('.admin-sidebar').removeClass('mobile-open');
+                        $('body').removeClass('admin-sidebar-open');
+                        $('#adminMenuToggle i').removeClass('fa-times').addClass('fa-bars');
                     }
                 }
-            );
+            });
+            
+            // Highlight active menu item
+            var currentPath = window.location.pathname;
+            $('aside nav a.admin-nav-link').each(function() {
+                var href = $(this).attr('href');
+                var pathMatch = currentPath.includes(href) || currentPath === href || 
+                               (href.includes('index.php') && currentPath.endsWith('/admin/')) ||
+                               (href.includes('index.php') && currentPath.endsWith('/admin/index.php'));
+                
+                if (pathMatch) {
+                    $(this).addClass('active');
+                }
+            });
+            
+            // Close mobile menu when clicking a link
+            $('.admin-nav-link').on('click', function() {
+                if ($(window).width() <= 768) {
+                    $('.admin-sidebar').removeClass('mobile-open');
+                    $('body').removeClass('admin-sidebar-open');
+                    $('#adminMenuToggle i').removeClass('fa-times').addClass('fa-bars');
+                }
+            });
         });
     </script>
 </body>
